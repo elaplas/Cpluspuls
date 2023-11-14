@@ -1,0 +1,81 @@
+
+bool calcOF(img, outFlowImg) {//some impl}
+
+main() 
+{
+	// some members
+	calImg flowImg1;
+	calImg flowImg2;
+	calImg* currFlowImg = &flowImg1;
+	calImg* prevFlowImg = &flowImg2;
+	bool isOddFrame = true;
+	// from here on, we iterate for every frame
+	auto future_flow_image = std::async(std::launch::async, calcOF(currCamImg, currFlowImg));
+
+	trackList = tracker(prevFlowImg, isKeyframe);
+
+	if(isKeyframe)
+	{
+		calcOdom(trackList);
+	}
+
+	if(future_flow_image.get())
+	{
+		// once OF computation has finished, switch buffers to not overwrite the data in the next iteration
+		if(isOddframe)
+		{
+			currFlowImg = &flowImg2;
+			prevFlowImg = &flowImg1;
+			isOddframe = false;	
+		}
+		else
+		{
+			currFlowImg = &flowImg1;
+			prevFlowImg = &flowImg2;	
+			isOddframe = true;
+		}
+	}
+}
+
+
+
+main(){
+
+
+auto future_flow_image = std::async(std::launch::async, calcOF(Img)); 
+
+trackList = tracker(preFlowImg);
+
+calcOdom(trackList);
+
+curFlowImg = future_flow_image.get();
+
+ 
+preFlowImg = curFlowImg;
+
+
+}
+
+int x;
+int y;
+
+int& xRef{x};
+int& yRef{y};
+
+int z;
+
+int& zRef{z};
+
+xRef = zRef; 
+
+
+
+
+
+
+
+
+
+
+
+

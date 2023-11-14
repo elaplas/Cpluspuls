@@ -1,0 +1,159 @@
+
+
+#include <iostream>
+
+#include <string>
+
+#include <vector>
+
+#include <cmath>
+
+ 
+
+// Constant
+
+template<int a> class Const {
+
+    public:
+
+    static double eval(std::vector<double>& x) {
+
+     return static_cast<double>(a);
+
+    }
+
+};
+
+ 
+
+// Componente of a vector X
+
+template<int n> class X {
+
+    public:
+
+    static double eval(std::vector<double>& x) {
+
+     return x[n];
+
+    }
+
+};
+
+ 
+
+// Plus operator
+
+template<class A, class B> class Plus {
+
+    public:
+
+    static double eval(std::vector<double>& x) {
+
+     return A::eval(x)+B::eval(x);
+
+    }
+
+};
+
+ 
+
+// Times operator
+
+template<class A, class B> class Times {
+
+    public:
+
+    static double eval(std::vector<double>& x) {
+
+     return A::eval(x)*B::eval(x);
+
+    }
+
+};
+
+ 
+
+// Integer power operator
+
+template<class A, int n> class Pow {
+
+    public:
+
+    static double eval(std::vector<double>& x) {
+
+     return std::pow(A::eval(x), n);
+
+   }
+
+};
+
+ 
+
+// Differential operator for everything not containing X(n)
+
+template<class A, int n> class Diff {
+
+    public:
+
+    typedef Const<0> Type;
+
+};
+
+ 
+
+// X(n)/dX(n) = 1
+
+template<int n> class Diff<X<n>, n> {
+
+    public:
+
+    typedef Const<1> Type;
+
+};
+
+ 
+
+// f(X)*g(X)/dX(n) = f/dX(n)(X)*g(X)+g/dX(n)*g(X)
+
+template<int n, class A, class B> class Diff<Times<A, B>, n> {
+
+    public:
+
+    typedef Plus<Times<typename Diff<A, n>::Type, B>, Times<typename Diff<B, n>::Type, A>> Type;
+
+};
+
+ 
+
+// X(n)^k/d(n) = k*X(n)^(k-1)
+
+template<int n, class A, int k> class Diff<Pow<A, k>, n> {
+
+    public:
+
+    typedef Times<Const<k>, Pow<X<n>, k-1>> Type;
+
+};
+
+ 
+
+int main() {
+
+    std::vector<double> x;
+
+    x.push_back(1.0);
+
+    x.push_back(2.0);
+
+    // f(X) = 3*X(1)^2
+
+    typedef Times<Const<3>, Pow<X<1>, 2>> expr;
+
+    // f'/dX(1)(X) = 6*X(1)
+
+    typedef Diff<expr, 1>::Type diff;
+
+    std::cout << diff::eval(x) << std::endl;
+
+}

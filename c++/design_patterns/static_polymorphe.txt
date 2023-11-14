@@ -1,0 +1,139 @@
+
+
+#include <iostream>
+
+ 
+
+using namespace std;
+
+ 
+
+template<class POLICY> class Base {
+
+  public:
+
+    void run() {
+
+        POLICY::run();
+
+    }
+
+};
+
+ 
+
+template<class POLICY> class BaseDerive : public POLICY {
+
+  public:
+
+};
+
+ 
+
+template<class POLICY> class BaseAggregate {
+
+  public:
+
+    void run() {
+
+        policy.run();
+
+    }
+
+  protected:
+
+  POLICY policy;
+
+};
+
+ 
+
+class StaticChild {
+
+  public:
+
+    static void run() {
+
+        std::cout << "Running" << std::endl;
+
+    }
+
+};
+
+ 
+
+class Child {
+
+  public:
+
+    void run() {
+
+        std::cout << "Running" << std::endl;
+
+    }
+
+};
+
+ 
+
+template<class Child> class CRTPBase {
+
+    public:
+
+        void run() {
+
+            static_cast<Child*>(this)->impl();
+
+        }
+
+};
+
+ 
+
+class CRTPChild : public CRTPBase<CRTPChild> {
+
+    public:
+
+       void impl() {
+
+            std::cout << "CRTP" << std::endl;  
+
+       }
+
+};
+
+ 
+
+class Impl {
+
+public:
+
+Base<StaticChild> derived;
+
+BaseDerive<Child> derived1;
+
+BaseAggregate<Child> derived2;
+
+CRTPBase<CRTPChild> crtp;
+
+};
+
+ 
+
+static Impl impl;
+
+ 
+
+int main() {
+
+    impl.derived.run();
+
+    impl.derived1.run();
+
+    impl.derived2.run();
+
+    impl.crtp.run();
+
+    return 0;
+
+}

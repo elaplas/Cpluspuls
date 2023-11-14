@@ -1,0 +1,124 @@
+#include <iostream>
+
+#include <string>
+
+ 
+
+template<class TYPE, int MAX_SIZE> class Array {
+
+  public:
+
+  Array(int size) : size(size) {
+
+      }
+
+  void resize(int size) {
+
+      this->size = size;
+
+  }
+
+  TYPE& operator[](int n) {
+
+    return data[n];
+
+  }
+
+  int getSize() {
+
+    return size;
+
+  }
+
+  protected:
+
+  int size;
+
+  TYPE data[MAX_SIZE];
+
+};
+
+ 
+
+template<class CONFIG> class Impl {
+
+  public:
+
+  typedef typename CONFIG::TYPE Type;
+
+  Impl() : x(0) {
+
+  }
+
+  Array<Type, CONFIG::MAX_SIZE>& getData() {
+
+    return x;
+
+  }
+
+  Type operator()() {
+
+    double sum = 0.0;
+
+    for (int i = 0; i < x.getSize(); i++) {
+
+        sum += x[i];
+
+    }
+
+    return sum;
+
+  }
+
+  protected:
+
+  Array<Type, CONFIG::MAX_SIZE> x;
+
+};
+
+ 
+
+// -- Var --
+
+ 
+
+class Config {
+
+    public:
+
+        typedef double TYPE;
+
+        static const int MAX_SIZE = 100;
+
+};
+
+ 
+
+static Impl<Config> impl;
+
+ 
+
+double transform(double x) {
+
+    return x;
+
+}
+
+ 
+
+int main() {
+
+    std::cout << sizeof(impl) << std::endl;
+
+    impl.getData().resize(2);
+
+    impl.getData()[0] = transform(1.0);
+
+    impl.getData()[1] = transform(2.0);
+
+    std::cout << impl() << std::endl;
+
+    return 0;
+
+}
+
