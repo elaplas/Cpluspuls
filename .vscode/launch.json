@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        
+        {
+            "name": "C/C++: gcc build and debug active file",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/home/goo2hi/mydev/C++_examples/C++_examples/data_structures/array/cmake-build-debug/vector",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "/home/goo2hi/mydev/C++_examples/C++_examples/data_structures/array/",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "C/C++: gcc build active file",
+            "miDebuggerPath": "/usr/bin/gdb"
+        }
+    ],
+    "version": "2.0.0"
+}
