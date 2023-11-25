@@ -11,6 +11,8 @@
  * 3- Destroys and de-initializes the object by calling the object's destructor 
  * 4- deallocate the reserved memory using "free"
  * 
+ *  One application of "Allocator" is to allocate and construct an object of any type in-place in heap memory
+ * 
 */
 
 

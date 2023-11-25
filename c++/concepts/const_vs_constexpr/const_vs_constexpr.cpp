@@ -56,6 +56,25 @@ static constexpr double x = 5.5;
 
 };
 
+/**
+ * const: (variable's value should not be modified after initialization)
+ *  - Used to create constant variables or pointers to constants.
+    - The value of a const variable is evaluated at runtime.
+    - Can be applied to variables, pointers, references, member functions and function parameters.
+    - Can't be used for compile-time computations.
+    - Is useful for expressing intent and preventing accidental modifications.
+ 
+  constexpr: (to declare that an expression or a function can be evaluated at compile time, allowing for compile-time computations and optimizations)
+
+    - Used to create variables, functions, and expressions that are evaluated at compile time.
+    - The value of a constexpr variable or expression is evaluated at compile time.
+    - Can be used for defining compile-time constants and functions.
+    - Is evaluated by the compiler during compilation.
+    - Useful for enabling compile-time computations and improving performance.
+ *
+ * both const and constexpr variables must be initialized at declaration time.
+ */
+
 
 
 

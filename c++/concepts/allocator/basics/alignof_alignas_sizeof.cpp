@@ -4,9 +4,9 @@
 
 
 /**
- * "alginof" returns the number of memory blocks needed b/w the memory addresses of an object.
- * If it is used for an struct or class the returned value will be the number of memory blocks
- * required b/w the biggest members. The memory block of smaller members will be zero-padded.  
+ * "alginof" returns the size of smallest memory block in bytes needed b/w the memory addresses of an object.
+ * If it is used for an struct or class the returned value will be the smallest memory block required to store the biggest member.
+ * The memory block of smaller members will be zero-padded.  
  * 
  * "alignas" set the alignment requirement for a type.
  * 
@@ -41,7 +41,7 @@ struct  alignas(alignof(int)) Bar
     double c;
 };*/
 
-// alignof of array will return the number of memory blocks in bytes needed b/w two elements
+// alignof of array will return the memory size in bytes needed b/w two elements
 // sizeof will return the size of array in bytes 
 int A[10];
 

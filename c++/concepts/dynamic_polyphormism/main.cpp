@@ -2,12 +2,11 @@
 
 
 /**
- * using keyword virtual enables a function to have different implementations
+ * using keyword virtual enables a function to have different implementations/forms/morphs
  *  functions in base class with the same name and signature can be accessed through up-casted derived reference/pointer
  *
- * without keyword virtual, we will have a hidden function
+ * without keyword virtual, we will have a hidden function 
  * methods in derived class cannot be accessed through up-casted derived reference/pointer
- * hidden methods in base class cannot be access from derived classes
  */
 
 

@@ -17,7 +17,7 @@
 // alignment: requirement, which is a nonnegative integer value (of type std::size_t, and always a power of two)
 // representing the number of bytes between successive addresses at which objects of this type can be allocated. 
 
-// Allocation from data memory
+// Allocation from global memory
 unsigned char globalMemPtr[8];
 
 // class example
@@ -35,7 +35,7 @@ class B{
 
 int main()
 {
-   // Construction of objects in data memory
+   // Construction of objects in global memory
    auto objPtrOnData1 = new((void*)globalMemPtr) int(5);
    auto objPtrOnData2 = new((void*)globalMemPtr+4) int(6);
 
