@@ -4,7 +4,7 @@
 /**
  * Reference in C++
  * 1- It is initialized at construction and cannot change later
- * 2- It is treated as it is an object and not an address of class/type
+ * 2- It is treated as it is an object and not an address of that object
  */
 
 

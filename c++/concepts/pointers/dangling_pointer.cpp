@@ -2,7 +2,7 @@
 
 
 /**
- * A dangling pointer situation in C++ occurs when a pointer continues to point to a memory 
+ * A dangling pointer situation occurs when a pointer continues to point to a memory 
  * location that has been deallocated or has gone out of scope. Accessing 
  * or using such a pointer can lead to undefined behavior, as the memory it points to may 
  * have been reused for other purposes or might no longer hold valid data

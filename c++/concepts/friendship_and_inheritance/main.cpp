@@ -29,7 +29,7 @@ private:
 
 
 
-///Friend classes are those whose member functions can access the private and protected member functions of
+///Friend classes are those whose member functions can access the private and protected members of
 /// another class
 /// Hint: Friendship is not mutual
 
@@ -43,7 +43,7 @@ class Circle{
   float r;
 };
 
-///class friendship but not function friendship can be inherited but only for
+///class friendship can be inherited but only for
 /// base class members
 class Derived: public Circle{
 

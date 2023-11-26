@@ -6,9 +6,6 @@ using namespace std;
 
 class Base
 {
-
-    
-
     protected:
     int y = 9;
 };

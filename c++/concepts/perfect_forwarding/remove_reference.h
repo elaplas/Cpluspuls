@@ -12,7 +12,7 @@ namespace Example{
     
     // Forwarding Reference Problem: if "T" is "int" then the parameter signature is rvalue reference "int&&" but if "T" is "int&" 
     // then the parameter signature is lvalue reference "int&"
-    // Hint: the passed argument "t" can be lvalue reference or rvalue reference
+    // Hint: the passed argument "t" can be lvalue reference or rvalue reference depending on T
     template<class T>
     void problem(T&& t)
     {};

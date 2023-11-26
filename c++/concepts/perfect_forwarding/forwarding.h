@@ -3,6 +3,13 @@
 
 #include "remove_reference.h"
 
+/**
+ * perfect forwarding is a powerful mechanism that ensures arguments
+ *  are passed with their original value categories intact, facilitating generic 
+ * programming and efficient resource management without unnecessary copies or modifications
+ * 
+ */
+
 // Perfect forwarding: 
 
 // 1) For passing "t" as lvalue reference if "T" is a lvalue reference and "t" is lvalue reference 
