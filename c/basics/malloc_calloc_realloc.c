@@ -1,7 +1,8 @@
 /*
 * malloc(int size):
 *
-* allocates size bytes of memory. The allocated memory remains uninitialized
+* allocates size bytes of memory. The allocated memory remains uninitialized.
+* returns a void pointer
 *
 */
 

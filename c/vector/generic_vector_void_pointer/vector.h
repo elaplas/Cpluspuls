@@ -20,7 +20,7 @@ void initVector(struct Vector* vec)
 void resizeVector(struct Vector* vec, int newSize)
 {
     vec->capacity = newSize;
-    vec->data = (void**) realloc(vec->data, vec->capacity * sizeof(void*));
+    realloc(vec->data, vec->capacity * sizeof(void*));
 }
 
 void push_back(struct Vector* vec, void* value)

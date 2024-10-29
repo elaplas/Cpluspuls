@@ -1,18 +1,14 @@
 #include <iostream>
 
-
 using namespace std;
 
 
 /**
  * 
- * 
  * The Singleton pattern is a creational design pattern that ensures a class 
  * has only one instance and provides a global point of access to that instance.
  *  It's often used when you want to control the instantiation of a class to 
  * ensure that there's only one instance throughout the application's lifecycle
- * 
- * 
  * 
  * */
  

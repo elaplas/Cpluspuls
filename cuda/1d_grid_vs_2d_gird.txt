@@ -1,0 +1,59 @@
+You are tasked with processing a grayscale image of size 1024 x 1024 pixels using CUDA.
+Each pixel is represented as a float, and the operation you need to perform is an
+element-wise transformation of the image where each pixel's value is squared.
+
+Part 1: 1D Kernel Implementation
+Implement a CUDA kernel that treats the image as a 1D array (of size 1024 x 1024 =
+1048576 elements) and processes each pixel in parallel. Write the kernel and the
+corresponding kernel launch configuration.
+
+Part 2: 2D Kernel Implementation
+Now, rewrite the kernel to process the image using a 2D grid and block configuration, with each
+thread handling a specific (x, y) pixel. Write the 2D kernel and the corresponding kernel
+launch configuration.
+
+
+Part 3: Performance Consideration
+Compare the two approaches in terms of:
+● Hardware optimizations
+● Scalability to larger images (e.g., 3848 x 2160)
+Which approach would you recommend for efficient image processing on larger datasets, and
+why?
+
+
+
+For optimal memory throughput, a warp (32 threads) should ideally access a contiguous region of memory. 
+Each CUDA block contains multiple warps. 
+
+In 1D access patterns—using a 1D grid of blocks—threads within each warp access consecutive elements in an array.
+This alignment increases memory locality, reducing cache misses and optimizing memory access. In contrast, 2D access patterns-using 
+a 2D grid of blocks—only achieve contiguous access within rows of a block. If the width of the 2D block is a multiple of 32, it ensures
+contiguous access within each warp, maximizing memory throughput.
+
+When working with 2D data structures, such as grayscale images, 2D access patterns map more naturally to the data, 
+allowing for straightforward indexing of elements based on thread and block coordinates. This is particularly helpful 
+when the data dimensions do not align precisely with block dimensions, enabling each block to independently process 
+patches of the image. This independence allows for the efficient handling of large images by dividing them into smaller,
+manageable 2D patches (2D blocks), which is more challenging in 1D access patterns, where data is primarily accessed column-wise. 
+This column-wise access makes 2D operations, such as convolutions, more complex to implement for very large images.  
+
+
+Numpy to CUDA translation question:
+Part 1: CUDA Implementation
+Translate the following Python NumPy code into a C++ program that uses CUDA. Your solution
+should:
+1. Implement matrix multiplication using a CUDA kernel.
+2. Implement an element-wise sigmoid transformation using another CUDA kernel.
+
+The Python code is as follows:
+import numpy as np
+def sigmoid(x):
+return 1 / (1 + np.exp(-x))
+def matrix_operations(A, B):
+# Perform matrix multiplication
+C = np.dot(A, B)
+# Apply element-wise transformation: sigmoid function
+C_transformed = sigmoid(C)
+return C_transformed
+A = [[4, 2], [7, 5]]
+B = [[8, 6], [9, 1]]

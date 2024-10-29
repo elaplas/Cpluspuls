@@ -1,7 +1,7 @@
 /**
  * 
  * In this example, we'll assume that we have an existing system with a legacy interface that needs 
- * to be integrated with a new third-party library having a different interface. We'll create an adapter 
+ * to be integrated with a new library having a different interface. We'll create an adapter 
  * class to bridge the gap between the two interfaces.
  * 
  * 

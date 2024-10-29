@@ -1,6 +1,6 @@
 /***
  * The "Facade" design pattern is used to provide a simplified and unified interface
- * to a complex subsystem, making it easier for clients to interact with the system. 
+ * to complex subsystems, making it easier for clients to interact with the system. 
  * In this example, we'll create a simple audio system that consists of multiple sub-components,
  * and then we'll implement a facade to simplify its usage.
  * 
