@@ -3,7 +3,8 @@
 #include <utility>
 
 /**
- * One application of "AnyStorage" is to provide non-heap storage and construct any type in-place in the provided non-heap memory
+ * One application of "AnyStorage" is to provide non-heap storage 
+ * and construct any type in-place in the provided non-heap memory
  */
 
 template<int STORAGE_SIZE, int AlIGNMENT_SIZE>

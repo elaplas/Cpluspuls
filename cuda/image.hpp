@@ -1,5 +1,5 @@
-#ifndef __TYPES__
-#define __TYPES__
+#ifndef __IMAGE__
+#define __IMAGE__
 
 /**
  * @brief Type defining 2D image

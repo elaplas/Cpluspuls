@@ -11,7 +11,8 @@ __global__ void squareArray(float* arr, int arrSize)
     int i = blockDim.x * blockIdx.x + threadIdx.x;
     if (i < arrSize)
     {
-        arr[i] *= arr[i];
+        const float tmp = arr[i];
+        arr[i] = tmp * tmp;
     }
 }
 
