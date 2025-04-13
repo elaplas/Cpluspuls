@@ -4,7 +4,7 @@
 
 
 /**
- * "alginof" returns the size of smallest memory block in bytes needed b/w the memory addresses of an object.
+ * "alignof" returns the size of smallest memory block in bytes needed b/w the memory addresses of an object.
  * If it is used for an struct or class the returned value will be the smallest memory block required to store the biggest member.
  * The memory block of smaller members will be zero-padded.  
  * 

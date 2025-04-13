@@ -35,6 +35,7 @@ class SharedPointer
     ptr = other.ptr;
     counter = other.counter;
     ++(*counter);
+    return *this;
   }
 
   SharedPointer& operator=(SharedPointer&& other)
@@ -43,6 +44,7 @@ class SharedPointer
     counter = other.counter;
     other.ptr = nullptr;
     other.counter = nullptr;
+    return *this;
   }
 
   ~SharedPointer()
