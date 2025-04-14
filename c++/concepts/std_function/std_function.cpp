@@ -16,55 +16,135 @@ template<class R, class... Args>
 class Function<R(Args...)>
 {
     public:
-    typedef R (*TFunc)(Args...);
+    
+    // Helper type to enable passing function pointer to "ImplCallable" at callback of "Function" constructor
+    // and build "ImplCallable" and implement the invoke() and clone()
+    // invoke(): to call the function pointer and pass argements
+    // clone(): to copy ImplCallabe and return Callable pointer (remember in "Function" type, we dont have
+    // access to type of function pointer and its actual pointer)   
+    class Callable
+    {
+        public:
+        virtual ~Callable() = default;
+        virtual R invoke(Args... args) = 0;
+        virtual Callable* clone() = 0;
+    };
 
-    Function(): Function(nullptr){}
+    template<class T>
+    class ImplCallable: public Callable
+    {
+        public:
+        ImplCallable(): m_func(nullptr) {}
+        ImplCallable(T func)
+        {
+            m_func = new T(func);
+        }
+        ImplCallable(const ImplCallable& other)
+        {
+            if (m_func)
+            {
+                delete m_func;
+            }
+            m_func = new T(*other.m_func);
+        }
+        ImplCallable(ImplCallable&& other)
+        {
+            m_func = other.m_func;
+            other.m_func = 0;
+        }
+        ImplCallable& operator==(const ImplCallable& other)
+        {
+            if (m_func)
+            {
+                delete m_func;
+            }
+            m_func = new T(*other.m_func);
+            return *this;
+        }
 
-    Function(TFunc fn ){
+        ImplCallable& operator==(ImplCallable&& other)
+        {
+            m_func = other.m_func;
+            other.m_func = 0;
+            return *this;
+        }
 
-        m_fn_ptr = new TFunc(fn);
+        ~ImplCallable()
+        {
+            if (m_func)
+            {
+                delete m_func;
+            }
+        }
+
+        virtual R invoke(Args... args) override
+        {
+            return (*m_func)(args...);
+        }
+
+        virtual Callable* clone() override
+        { 
+            return new ImplCallable(*m_func);
+        }
+
+        private:
+        T* m_func;
+    };
+
+    Function(): m_callable(nullptr){}
+
+    template<class T>
+    Function(T fn){
+
+        m_callable = new ImplCallable<T>(fn);
     }
     
     Function(const Function& other)
     {
-        
-        m_fn_ptr = new TFunc(*other.m_fn_ptr);
+        if (m_callable)
+        {
+          delete m_callable;  
+        }
+        m_callable = other.m_callable->clone();
     }
 
     Function(Function&& other)
     {
-        m_fn_ptr = other.m_fn_ptr;
-        other.m_fn_ptr = nullptr;
+        m_callable = other.m_callable;
+        other.m_callable = nullptr;
     }
 
     Function& operator==(const Function& other)
     {
-        delete m_fn_ptr;
-        m_fn_ptr = new TFunc(*other.m_fn_ptr);
+        if (m_callable)
+        {
+          delete m_callable;  
+        }
+        m_callable = other.m_callable->clone();
         return *this;
     }
 
     Function& operator==(Function&& other)
     {
-        m_fn_ptr = other.m_fn_ptr;
-        other.m_fn_ptr = nullptr;
+        m_callable = other.m_callable;
+        other.m_callable = nullptr;
         return *this;
     }
 
     R operator() (Args... args)
     {
-        return (*m_fn_ptr)(args...);
+        return m_callable->invoke(args...);
     }
 
     ~Function() {
-        if (m_fn_ptr)
+        if (m_callable)
         {
-            delete m_fn_ptr;
+            delete m_callable;
         }
     }
 
     private:
-    TFunc* m_fn_ptr;
+    Callable* m_callable;
 };
 
 float add(int x, float y)
@@ -79,11 +159,19 @@ int main()
     Function<float(int,float)> func(add);
     std::cout<<"call float add(int, float): "<<func(4,5.5)<<"\n";
 
-    // Pass a lambda function
+    // Pass a lambda function without capture
     Function<float(int,float)> func1( [](int x, float y)->float{ return x+y;} );
     std::cout<<"call float lambda (int, float): "<<func1(10,15.5)<<"\n";
 
-    // Test copying
-
+    // Pass a lambda function with capture
+    int value = 5;
+    auto fn = [value](int i) mutable {std::cout<<i<<", "<<value++<<"\n";};
+    auto func2 = Function<void(int)>(fn);
+    auto func3 = func2; // copying
+    func2(0);
+    func2(1);
+    func2(2);
+    func3(3);
+   
     return 0;
 }
