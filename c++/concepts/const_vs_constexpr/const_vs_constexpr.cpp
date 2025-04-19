@@ -1,4 +1,4 @@
-
+#include <iostream>
 
 /**
  * Both PI1 and PI2 are constant, meaning you can not modify them. However only PI2 is a compile-time constant. 
@@ -58,12 +58,26 @@ static constexpr double x = 5.5;
 
 /**
  * const: (variable's value should not be modified after initialization)
- *  - Used to create constant variables or pointers to constants.
-    - The value of a const variable is evaluated at runtime.
+ *  - Used to create constant variables or pointers to constants. (declares sth that cannot be changed after initialization)
+    - The value of a const variable is known and evaluated at runtime.
     - Can be applied to variables, pointers, references, member functions and function parameters.
     - Can't be used for compile-time computations.
-    - Is useful for expressing intent and preventing accidental modifications.
- 
+    - Is useful for expressing intent and preventing accidental modifications.**/
+
+    //1. Prevent accidental modifications
+    void printValue(const int x) {
+    // x = 10; // ❌ Error: can't modify
+    std::cout << x << '\n';
+    }
+
+    //2. Read-only global or local variable
+    const double pi = 3.14159;
+
+    //3. Pointer immutability
+    int value = 42;
+    const int* ptr = &value;
+
+/**
   constexpr: (to declare that an expression or a function can be evaluated at compile time, allowing for compile-time computations and optimizations)
 
     - Used to create variables, functions, and expressions that are evaluated at compile time.
@@ -74,6 +88,33 @@ static constexpr double x = 5.5;
  *
  * both const and constexpr variables must be initialized at declaration time.
  */
+
+  /**
+   * Feature                   | const                     | constexpr
+    Known when?                | Runtime                   | Compile-time
+    Modifiable?                | No                        | No
+    Can be used as array size? | ❌ No (in some contexts)  | ✅ Yes
+    Guarantees evaluation?     | ❌ Maybe runtime          | ✅ Must be compile-time
+  */
+
+  //1. Compile-time math or logic
+  constexpr int square(int x) {
+    return x * x;
+  }
+
+  int arr[square(4)]; // ✅ Compile-time size
+
+  //2. Constant expression variables
+  constexpr double gravity = 9.8;
+
+  //3. Constant constructors 
+  struct Vec2 {
+    double x, y;
+    constexpr Vec2(double x_, double y_) : x(x_), y(y_) {}
+};
+
+constexpr Vec2 v(1.0, 2.0);
+
 
 
 
