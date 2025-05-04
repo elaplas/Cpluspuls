@@ -37,6 +37,20 @@ b owns a → cycle
 
 */
 
+struct D;
+struct C{
+    D* ptr_d;
+    ~C(){
+        std::cout << "C destroyed\n";
+    }
+};
+struct D{
+    C* ptr_c;
+    ~D(){
+        std::cout << "D destroyed\n";
+    }
+};
+
 int main() {
     std::shared_ptr<A> a = std::make_shared<A>();
     std::shared_ptr<B> b = std::make_shared<B>();
@@ -46,6 +60,11 @@ int main() {
     b->a_ptr = a;
 
     std::cout<<a.use_count()<<"\n";
+
+    C c;
+    D d;
+    c.ptr_d = &d;
+    d.ptr_c = &c;
 
     return 0;
 }

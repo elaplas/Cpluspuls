@@ -52,7 +52,7 @@ class Function<R(Args...)>
             m_func = other.m_func;
             other.m_func = 0;
         }
-        ImplCallable& operator==(const ImplCallable& other)
+        ImplCallable& operator=(const ImplCallable& other)
         {
             if (m_func)
             {
@@ -62,7 +62,7 @@ class Function<R(Args...)>
             return *this;
         }
 
-        ImplCallable& operator==(ImplCallable&& other)
+        ImplCallable& operator=(ImplCallable&& other)
         {
             m_func = other.m_func;
             other.m_func = 0;
@@ -114,7 +114,7 @@ class Function<R(Args...)>
         other.m_callable = nullptr;
     }
 
-    Function& operator==(const Function& other)
+    Function& operator=(const Function& other)
     {
         if (m_callable)
         {
@@ -124,7 +124,7 @@ class Function<R(Args...)>
         return *this;
     }
 
-    Function& operator==(Function&& other)
+    Function& operator=(Function&& other)
     {
         m_callable = other.m_callable;
         other.m_callable = nullptr;
