@@ -55,6 +55,7 @@ class Pointer{
 
     private:
     int* m_ptr;
+    const double i = 4;
 };
 
 int Pointer::counter = 0;

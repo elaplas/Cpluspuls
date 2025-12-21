@@ -12,7 +12,7 @@
 /**
  * how to define function pointers:
 */
-
+int (*fv)(int, int); // defines a function pointer variable
 typedef int (*TFunc)(int, int); // <output_type> (*<your_chosen_name>)(<input_type1>, <input_type2>);
 typedef void (*TFunc1)(float); // <output_type> (*<your_chosen_name>)(<input_type>);
 
@@ -37,6 +37,7 @@ int main()
     // the usage of function pointer type, as you see the "*" in type definition is an indication that "TFunc"
     // is a pointer
     TFunc func1 = func;
+    fv = func1;
     std::cout<<"func: "<<func1(4,5)<<"\n";
 
     return 0;

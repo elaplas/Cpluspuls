@@ -32,6 +32,12 @@ class SharedPointer
 
   SharedPointer& operator=(const SharedPointer& other)
   {
+    if (*counter == 1)
+    {
+        delete ptr;
+        delete counter;
+        std::cout<<"memory is deallocated over copying"<<std::endl;
+    }
     ptr = other.ptr;
     counter = other.counter;
     ++(*counter);
@@ -40,6 +46,12 @@ class SharedPointer
 
   SharedPointer& operator=(SharedPointer&& other)
   {
+    if (*counter == 1)
+    {
+        delete ptr;
+        delete counter;
+        std::cout<<"memory is deallocated over moving"<<std::endl;
+    }
     ptr = other.ptr;
     counter = other.counter;
     other.ptr = nullptr;

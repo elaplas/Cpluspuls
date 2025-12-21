@@ -25,7 +25,7 @@ g++ -c mult.cpp -o obj_mult.o
 
 g++ -shared -fPIC -o shared_mathlib.so obj_add.o obj_mult.o
 
-3. Make an executable using shared library. The executable file is dependent on shared library after being built because it does only contains the path where the shared library lies
+3. Make an executable using shared library. The executable file is dependent on shared library after being built because it does only contain the path where the shared library lies
 
 
 g++ main.cpp -o dependent_main ./shared_mathlib.so -lm

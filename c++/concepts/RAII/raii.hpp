@@ -22,6 +22,7 @@ public:
     }
 
     ~RAIIExample() {
+        delete[] data;
         std::cout << "Resource released." << std::endl;
     }
 

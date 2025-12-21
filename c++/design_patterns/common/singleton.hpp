@@ -22,7 +22,8 @@ using namespace std;
 * Benefit: Controlled access to a shared resource, reduces memory footprint.
 * 
 * */
- 
+
+// class itself is a singleton
 class Configer{
 
     private:
@@ -55,12 +56,47 @@ class Configer{
     }
 };
 
+
 // in-class initialization for non-integral non-const types is not allowed
 std::unique_ptr<Configer> Configer::m_configer = nullptr;
+
+// general design to make any class a singleton
+template<class T>
+class Singleton
+{
+    public:
+        template<class... Args>
+        static T& get(Args&&... args)
+        {
+            if (!objPtr)
+            {
+                static T tmp(std::forward<Args>(args)...);
+                objPtr = &tmp;
+            }
+            return *objPtr;
+        }
+    private:
+        static T* objPtr;
+};
+
+template<class T>
+T* Singleton<T>::objPtr = nullptr;
+
+struct A{
+    int x;
+    int y;
+    A(int a, int b):x(a), y(b){}
+    A(){}
+};
 
 int main()
 {
     auto configer1 = Configer::getConfiger();
     auto configer2 = Configer::getConfiger();
+
+    A& a = Singleton<A>::get(2,4);
+    A& b = Singleton<A>::get();
+    std::cout<<a.x<<a.y<<"\n";
+    std::cout<<b.x<<b.y<<"\n";
     return 0;
 }

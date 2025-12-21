@@ -33,7 +33,7 @@ There are four storage classes in C programming language, which are as follows:
 
 
 - extern
-  - Makes a variable visible from once scope to another scope of the code 
+  - Makes a variable visible from one scope to another scope of the code 
   - When you use 'extern' the variable cannot be initialized
 
 - static

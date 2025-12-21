@@ -27,13 +27,12 @@ No output!!!
 
 ❗ Why?
 
-a points to b and b points back to a.
+becaue when shared_ptr of A goes out of scope, the reference count is decremented by 1
+but the reference count is still not zero to execute "delete A pointer" and consequently
+to call the destructor of A and to cause the shared_ptr of B to decrement its reference 
+count by 1. So the shared_ptr of A never runs "delete A pointer" and destructor of A.   
 
 Both have shared_ptrs → reference count never reaches 0 → destructors never called.
-
-a owns b
-
-b owns a → cycle
 
 */
 
@@ -65,6 +64,17 @@ int main() {
     D d;
     c.ptr_d = &d;
     d.ptr_c = &c;
+
+    // what happens when a1 goes out of scope:
+    // a1 goes out of scope and calls its destructor and it doesn't exist any more. Thus
+    // the shared_ptr of B goes out of scope and calls its destructor decremeting the 
+    // reference count by one. The reference count becomes zero, so " delete B pointer"
+    // is executed and the destructor of B is called. Since B contains a shared_ptr of A
+    // and goes out of scope, the destructor of A shared_ptr is called but it doesn't have any 
+    // effect because the reference count is decremented and become zero but the A raw
+    // pointer is already nullptr.  
+    A a1; 
+    a1.b_ptr = std::make_shared<B>();
 
     return 0;
 }

@@ -40,3 +40,45 @@ int x = 5;
 int& y = x;
 decltype(auto) z = (y); // z is int&, preserves reference
 
+
+
+// is it possible to pass a cllable to constructor of a class and call it later in
+// another method of the class???
+class A
+{
+    public:
+        template<class F, class... Args>
+        A(F fn, Args... args)
+        { 
+            auto call = [fn, args...] () -> decltype(fn(args...))
+            {
+                return fn(args...);
+            };
+            call();
+        }
+};
+
+void func1()
+{
+    std::cout<<"test1"<<"\n";
+}
+
+int func2(int x, int y)
+{
+    std::cout<<"test2: "<<x*y<<"\n"; 
+    return x;
+}
+
+auto lmbd = [](float x)
+{
+    std::cout<<"test3: "<<x<<"\n"; 
+};
+
+int main()
+{
+    A a1(func1);
+    A a2(func2, 2, 3);
+    A a3(lmbd, 4.5);
+
+    return 0;
+}

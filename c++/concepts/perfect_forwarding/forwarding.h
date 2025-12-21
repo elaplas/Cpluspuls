@@ -2,30 +2,32 @@
 #define PERFECT_FORWARDING_H_
 
 #include "remove_reference.h"
+#include "is_lvalue.h"
 
 /**
- * perfect forwarding is a powerful mechanism that ensures arguments
- *  are passed with their original value categories intact, facilitating generic 
+ * perfect forwarding ensures arguments are passed with their original value categories 
+ * (rvalue or lvalue). It preserves the rvalue-ness - and lvalue-ness of objects when they are
+ * passed/forwarded in another function. 
+ * 
+ * 
+ * intact, facilitating generic 
  * programming and efficient resource management without unnecessary copies or modifications
  * 
  */
 
-// Perfect forwarding: 
-
-// 1) For passing "t" as lvalue reference if "T" is a lvalue reference and "t" is lvalue reference 
-// 2) For passing "t" as rvalue reference if "T" is not a lvalue reference and "t" is a lvalue reference
-
 namespace Example{
 
+// Perfect forwarding: 
+
+// If lvalue passed, T becomes U&, then T&& becomes U&&& collapsing to U& resulting in preserving lvalue-ness
 template<class T>
 T&& forward(typename remove_reference<T>::type& t)
 {
     return static_cast<T&&>(t);
 }
 
-// 3) For passing "t" as rvalue reference if "T" is not a lvalue reference and "t" is a rvalue reference
-// 4) if "t" is a rvalue reference and "T" is lvalue reference, then it fails and cannot be converted to "lvalue"
-
+// If rvalue passed, T becomes U, then T&& becomes U&& resulting in preserving rvalue
+// Hint: if T refers to lvalue (U&) then it throws an error
 template<class T>
 T&& forward(typename remove_reference<T>::type&& t)
 {
@@ -34,14 +36,15 @@ T&& forward(typename remove_reference<T>::type&& t)
     return static_cast<T&&>(t);
 }
 
-// Move a variable ---> casting from lvalue to rvalue 
+// Moving is not forwarding! 
+//moving: casting from lvalue to rvalue 
+//forwarding: preserving lvalue-ness and rvalue-ness
 
 template<class T>
 remove_reference<T>::type&& myMove(remove_reference<T>::type& t)
 {
     return static_cast<remove_reference<T>::type&&>(t);
 }
-
 
 };
 

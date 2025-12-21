@@ -115,6 +115,15 @@ static constexpr double x = 5.5;
 
 constexpr Vec2 v(1.0, 2.0);
 
+constexpr int dotOp(Vec2 v1, Vect v2)
+{
+  return v1.x * v2.x + v1.y + v2.y;
+}
+
+int arr1[dotOp(Vec2(2,3), Vec2(5,6))];
+
+
+
 
 
 

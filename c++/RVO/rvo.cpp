@@ -25,11 +25,11 @@ int main() {
 /**
  * what would happen without RVO (return value optimization):
  * 
- * Constructor is called for obj
- * copy constuctor is called to return a copy of obj
+ * Custom Constructor is called for obj
+ * Copy constuctor is called to return a copy of obj
  * destructor is called to destroy obj
  * destructor is called to destroy the copy of obj
- * copy constructor ís called to construct result
+ * Copy constructor ís called to construct result
  * destructor is called to destroy result
  * 
  * what happens with RVO:

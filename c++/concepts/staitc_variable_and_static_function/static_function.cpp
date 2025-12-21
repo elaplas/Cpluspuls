@@ -35,16 +35,16 @@ class BasicCalcs{
 
     public:
 
-    static constexpr float PI = 3.14;
+    static constexpr double PI = 3.14;
 
     static float add(float x, float y)
     {
-        return x*y;
+        return x+y;
     }
 
     static float add(float x, float y, float z)
     {
-        return add(x,y)*z;
+        return add(x,y)+z;
     }
 
     static float circumference(float r)
