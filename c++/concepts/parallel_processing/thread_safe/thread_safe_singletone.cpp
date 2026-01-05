@@ -32,6 +32,32 @@ class Logger{
         Logger() = default;
 };
 
+
+class Logger1
+{
+    public:
+    static Logger1* getLogger()
+    {
+        if (!m_logger)
+        {
+            m_logger = new Logger1();
+            std::cout<<"created!"<<"\n";
+        }
+        return m_logger;
+    }
+
+    void log(const std::string& str)
+    {
+        std::cout<<str<<"\n";
+    }
+
+
+    private:
+        static Logger1* m_logger;
+};
+
+Logger1* Logger1::m_logger = nullptr;
+
 void creator1()
 {
     Logger& logger1 = Logger::create();
@@ -45,14 +71,32 @@ void creator2()
     logger2.log();
 }
 
+void creator3()
+{
+    auto logger = Logger1::getLogger();
+    logger->log("I am there!");
+}
+
+void creator4()
+{
+    auto logger = Logger1::getLogger();
+    logger->log("I am here!");
+}
+
 
 int main()
 {
 
     std::thread t1(creator1);
     std::thread t2(creator2);
+
+    std::thread t3(creator3);
+    std::thread t4(creator4);
+
     t1.join();
     t2.join();
+    t3.join();
+    t4.join();
 
     return 0;
 }
